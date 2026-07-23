@@ -1,0 +1,266 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design tokens for a premium data-analytics / AI portfolio.
+ * Dark by default. Orange (#FF7A00) + Cyan (#22D3EE) as dual accents.
+ * All colors in oklch. No hex/rgb utilities in components — always use tokens.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand accents */
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-orange-soft: var(--brand-orange-soft);
+  --color-brand-cyan: var(--brand-cyan);
+  --color-brand-cyan-soft: var(--brand-cyan-soft);
+
+  /* Surfaces (glass layers) */
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display:
+    "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Dark is the default. `.light` opts out. */
+:root {
+  --radius: 0.875rem;
+
+  --background: oklch(0.15 0.02 265);
+  --foreground: oklch(0.98 0.005 250);
+
+  --surface-1: oklch(0.19 0.022 265);
+  --surface-2: oklch(0.23 0.024 265);
+  --surface-3: oklch(0.28 0.026 265);
+
+  --card: oklch(0.19 0.022 265 / 70%);
+  --card-foreground: oklch(0.98 0.005 250);
+  --popover: oklch(0.19 0.022 265);
+  --popover-foreground: oklch(0.98 0.005 250);
+
+  --primary: oklch(0.75 0.18 55); /* orange */
+  --primary-foreground: oklch(0.16 0.02 265);
+  --secondary: oklch(0.82 0.14 210); /* cyan */
+  --secondary-foreground: oklch(0.16 0.02 265);
+
+  --muted: oklch(0.25 0.02 265);
+  --muted-foreground: oklch(0.72 0.02 260);
+  --accent: oklch(0.28 0.03 265);
+  --accent-foreground: oklch(0.98 0.005 250);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0.005 250);
+
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.75 0.18 55 / 60%);
+
+  --brand-orange: oklch(0.75 0.18 55);
+  --brand-orange-soft: oklch(0.75 0.18 55 / 15%);
+  --brand-cyan: oklch(0.82 0.14 210);
+  --brand-cyan-soft: oklch(0.82 0.14 210 / 15%);
+
+  --chart-1: oklch(0.75 0.18 55);
+  --chart-2: oklch(0.82 0.14 210);
+  --chart-3: oklch(0.7 0.16 145);
+  --chart-4: oklch(0.7 0.19 310);
+  --chart-5: oklch(0.78 0.16 85);
+
+  /* Composed tokens */
+  --gradient-hero:
+    radial-gradient(60% 60% at 20% 20%, oklch(0.75 0.18 55 / 22%) 0%, transparent 60%),
+    radial-gradient(50% 50% at 85% 15%, oklch(0.82 0.14 210 / 20%) 0%, transparent 60%),
+    linear-gradient(180deg, oklch(0.15 0.02 265) 0%, oklch(0.13 0.02 265) 100%);
+  --gradient-brand: linear-gradient(135deg, var(--brand-orange), var(--brand-cyan));
+  --gradient-text: linear-gradient(120deg, oklch(0.98 0.005 250), oklch(0.82 0.14 210));
+
+  --shadow-glow-orange: 0 20px 60px -20px oklch(0.75 0.18 55 / 45%);
+  --shadow-glow-cyan: 0 20px 60px -20px oklch(0.82 0.14 210 / 45%);
+  --shadow-elevated: 0 24px 60px -20px oklch(0 0 0 / 55%);
+  --shadow-soft: 0 10px 30px -12px oklch(0 0 0 / 40%);
+}
+
+.light {
+  --background: oklch(0.99 0.003 250);
+  --foreground: oklch(0.18 0.02 265);
+
+  --surface-1: oklch(0.97 0.005 250);
+  --surface-2: oklch(0.94 0.006 250);
+  --surface-3: oklch(0.9 0.008 250);
+
+  --card: oklch(1 0 0 / 80%);
+  --card-foreground: oklch(0.18 0.02 265);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.02 265);
+
+  --primary: oklch(0.68 0.19 50);
+  --primary-foreground: oklch(0.99 0.003 250);
+  --secondary: oklch(0.7 0.14 210);
+  --secondary-foreground: oklch(0.18 0.02 265);
+
+  --muted: oklch(0.94 0.006 250);
+  --muted-foreground: oklch(0.45 0.02 260);
+  --accent: oklch(0.94 0.006 250);
+  --accent-foreground: oklch(0.18 0.02 265);
+  --destructive: oklch(0.58 0.22 25);
+  --destructive-foreground: oklch(0.99 0.003 250);
+
+  --border: oklch(0.18 0.02 265 / 10%);
+  --input: oklch(0.18 0.02 265 / 12%);
+  --ring: oklch(0.68 0.19 50 / 50%);
+
+  --brand-orange: oklch(0.68 0.19 50);
+  --brand-orange-soft: oklch(0.68 0.19 50 / 12%);
+  --brand-cyan: oklch(0.7 0.14 210);
+  --brand-cyan-soft: oklch(0.7 0.14 210 / 12%);
+
+  --gradient-hero:
+    radial-gradient(60% 60% at 20% 20%, oklch(0.68 0.19 50 / 15%) 0%, transparent 60%),
+    radial-gradient(50% 50% at 85% 15%, oklch(0.7 0.14 210 / 15%) 0%, transparent 60%),
+    linear-gradient(180deg, oklch(0.99 0.003 250) 0%, oklch(0.97 0.005 250) 100%);
+  --shadow-elevated: 0 24px 60px -20px oklch(0.18 0.02 265 / 15%);
+  --shadow-soft: 0 10px 30px -12px oklch(0.18 0.02 265 / 10%);
+}
+
+@utility glass {
+  background: color-mix(in oklab, var(--surface-1) 65%, transparent);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid var(--color-border);
+}
+
+@utility glass-strong {
+  background: color-mix(in oklab, var(--surface-2) 80%, transparent);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--color-border);
+}
+
+@utility text-gradient-brand {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-hero {
+  background: var(--gradient-hero);
+}
+
+@utility ring-focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  html.light {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "ss01";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: var(--brand-orange-soft);
+    color: var(--foreground);
+  }
+
+  /* A11y: visible focus for all interactive elements */
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
+    border-radius: 8px;
+  }
+
+  /* A11y: skip link */
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -3rem;
+    z-index: 100;
+    padding: 0.5rem 1rem;
+    background: var(--surface-2);
+    color: var(--foreground);
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  /* A11y: honor reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility input-base {
+  @apply w-full rounded-2xl border border-border bg-surface-1 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:outline-none focus:border-brand-orange/50 focus:bg-surface-2;
+}
