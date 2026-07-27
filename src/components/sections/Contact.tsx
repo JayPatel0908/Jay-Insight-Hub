@@ -8,11 +8,13 @@ import {
   CheckCircle2,
   Loader2,
   AlertCircle,
+  RefreshCw,
 } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/action-button";
 import { profile, contactChannels } from "@/content";
+import { mockContactService } from "@/lib/cloud/interfaces";
 import { cn } from "@/lib/utils";
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -84,6 +86,32 @@ export function Contact() {
     setErrors(validate(values));
   };
 
+  const submit = async (payload: FormValues) => {
+    setStatus("sending");
+    setSubmitError(null);
+    try {
+      // TODO(cloud): swap `mockContactService` for a Lovable Cloud–backed
+      // ContactService implementation. UI states stay identical.
+      await mockContactService.submit({
+        name: payload.name.trim(),
+        email: payload.email.trim(),
+        subject: payload.subject.trim() || undefined,
+        message: payload.message.trim(),
+      });
+      setStatus("sent");
+      setValues({ name: "", email: "", subject: "", message: "" });
+      setTouched({});
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+      setSubmitError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again in a moment.",
+      );
+    }
+  };
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitError(null);
@@ -91,19 +119,12 @@ export function Contact() {
     setErrors(nextErrors);
     setTouched({ name: true, email: true, subject: true, message: true });
     if (Object.keys(nextErrors).length > 0) return;
+    await submit(values);
+  };
 
-    setStatus("sending");
-    try {
-      // TODO(cloud): POST to Lovable Cloud function/table.
-      await new Promise((r) => setTimeout(r, 900));
-      setStatus("sent");
-      setValues({ name: "", email: "", subject: "", message: "" });
-      setTouched({});
-    } catch (err) {
-      console.error(err);
-      setStatus("error");
-      setSubmitError("Something went wrong. Please try again in a moment.");
-    }
+  const retry = () => {
+    if (status === "sending") return;
+    void submit(values);
   };
 
   const reset = () => {
@@ -333,16 +354,25 @@ export function Contact() {
                 {status === "error" && submitError && (
                   <div
                     role="alert"
-                    className="flex items-start gap-2 rounded-2xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+                    className="flex flex-wrap items-start gap-3 rounded-2xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
                   >
                     <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-                    <span>{submitError}</span>
+                    <span className="flex-1 min-w-0">{submitError}</span>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={retry}
+                      leftIcon={<RefreshCw className="h-3.5 w-3.5" aria-hidden />}
+                    >
+                      Retry
+                    </Button>
                   </div>
                 )}
 
                 <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-2">
                   <p className="text-xs text-muted-foreground">
-                    Frontend-only for now. Wiring to Lovable Cloud in a later batch.
+                    Delivered via mock service — swap-in ready for Lovable Cloud.
                   </p>
                   <Button
                     type="submit"

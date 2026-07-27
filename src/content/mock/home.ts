@@ -9,6 +9,9 @@ import type {
   Certification,
   ContactChannel,
   LearningTopic,
+  Achievement,
+  ResumeMeta,
+  GitHubProfile,
 } from "../types";
 
 /**
@@ -22,61 +25,54 @@ export const profile: Profile = {
     "Aspiring Data Analyst",
     "AI Enthusiast",
     "Software Developer",
-    "Problem Solver",
   ],
-  tagline: "Turning data into insights and ideas into solutions.",
+  tagline: "Aspiring Data Analyst | AI Enthusiast | Software Developer",
   description:
-    "B.E. Information Technology student focused on data analytics, AI, and building software that helps people make better decisions.",
-  location: "India",
+    "I am a B.E. Information Technology student at Yadavrao Tasgaonkar Institute of Technology and Engineering, Mumbai University. I am passionate about Data Analytics, Artificial Intelligence and Software Development. I enjoy building real-world projects and continuously learning modern technologies.",
+  location: "Kalyan, Maharashtra, India",
   available: true,
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "/Jay_Patel_Resume_Styled.pdf",
 };
 
-export const timeline: TimelineEntry[] = [
+export const contactChannels: ContactChannel[] = [
   {
-    id: "programming",
-    year: "Step 1",
-    title: "Started Learning Programming",
-    description: "Learned C and built my programming fundamentals.",
-    tone: "cyan",
-  },
-  {
-    id: "java-sql",
-    year: "Step 2",
-    title: "Explored Java and SQL",
-    description: "Developed logical thinking and database fundamentals.",
+    id: "email",
+    label: "Email",
+    value: "jaykumar08patel@gmail.com",
+    href: "mailto:jaykumar08patel@gmail.com",
+    icon: "Mail",
     tone: "orange",
   },
   {
-    id: "web",
-    year: "Step 3",
-    title: "Started Web Development",
-    description: "Learned HTML, CSS, JavaScript and React.",
+    id: "phone",
+    label: "Phone",
+    value: "+91 8262098179",
+    href: "tel:+918262098179",
+    icon: "Phone",
     tone: "cyan",
   },
   {
-    id: "data-projects",
-    year: "Step 4",
-    title: "Built Data Analytics Projects",
-    description:
-      "Worked on AI and analytics-based projects including NGO AI Insights, AI in Education for Social Impact and Volunteer India 2025.",
+    id: "linkedin",
+    label: "LinkedIn",
+    value: "linkedin.com/in/jaykumar-patel-03982b379",
+    href: "https://www.linkedin.com/in/jaykumar-patel-03982b379",
+    icon: "Linkedin",
     tone: "orange",
   },
   {
-    id: "internship",
-    year: "Step 5",
-    title: "AI & Data Analytics Internship",
-    organization: "InAmigos Foundation",
-    description:
-      "Completed an internship where I worked on research, data collection, AI-assisted analysis and reporting.",
+    id: "github",
+    label: "GitHub",
+    value: "github.com/JayPatel0908",
+    href: "https://github.com/JayPatel0908",
+    icon: "Github",
     tone: "cyan",
   },
   {
-    id: "now",
-    year: "Step 6",
-    title: "Current Goal",
-    description:
-      "Preparing for Data Analyst internships and continuously improving my skills in Python, SQL, AI and modern analytics tools.",
+    id: "location",
+    label: "Location",
+    value: "Kalyan, Maharashtra, India",
+    href: "#",
+    icon: "MapPin",
     tone: "orange",
   },
 ];
@@ -88,55 +84,44 @@ export const stats: Stat[] = [
   { id: "graduation", label: "Graduation", value: 2027 },
 ];
 
+export const timeline: TimelineEntry[] = [
+  {
+    id: "college",
+    year: "2023",
+    title: "Started B.E. Information Technology",
+    organization:
+      "Yadavrao Tasgaonkar Institute of Technology and Engineering",
+    description:
+      "Started my engineering journey with a focus on programming, databases, and software engineering.",
+    tone: "orange",
+  },
+  {
+    id: "internship",
+    year: "2026",
+    title: "AI & Data Analytics Intern",
+    organization: "InAmigos Foundation",
+    description:
+      "Worked on NGO research, AI-assisted data analysis, report preparation, and social impact projects.",
+    tone: "cyan",
+  },
+  {
+    id: "projects",
+    year: "2026",
+    title: "Built Portfolio Projects",
+    organization: "Personal Projects",
+    description:
+      "Developed NGO AI Insights, AI in Education for Social Impact, NGO Research Webpage, and IMPACT INDIA.",
+    tone: "orange",
+  },
+];
+
 export const skillCategories: SkillCategory[] = [
-  {
-    id: "programming",
-    title: "Programming",
-    description: "Languages I reach for daily.",
-    icon: "Code2",
-    tone: "orange",
-    skills: ["Java", "Python", "JavaScript", "SQL", "C", "C++"],
-  },
-  {
-    id: "analytics",
-    title: "Data Analytics",
-    description: "From messy CSVs to clean insights.",
-    icon: "BarChart3",
-    tone: "cyan",
-    skills: ["Python", "SQL", "Microsoft Excel"],
-  },
-  {
-    id: "frontend",
-    title: "Frontend",
-    description: "Interfaces that feel effortless.",
-    icon: "Layout",
-    tone: "orange",
-    skills: ["HTML", "CSS", "React", "Tailwind CSS"],
-  },
-  {
-    id: "backend",
-    title: "Backend",
-    description: "APIs and services that scale.",
-    icon: "Server",
-    tone: "cyan",
-    skills: ["Node.js", "Express.js"],
-  },
-  {
-    id: "database",
-    title: "Database",
-    description: "Where the data lives.",
-    icon: "Database",
-    tone: "orange",
-    skills: ["MongoDB"],
-  },
-  {
-    id: "tools",
-    title: "Tools",
-    description: "My daily driver stack.",
-    icon: "Wrench",
-    tone: "cyan",
-    skills: ["Git", "GitHub", "VS Code"],
-  },
+  { id: "programming", title: "Programming", description: "Languages I reach for daily.", icon: "Code2", tone: "orange", skills: ["Java", "Python", "JavaScript", "SQL", "C", "C++"] },
+  { id: "analytics", title: "Data Analytics", description: "From messy CSVs to clean insights.", icon: "BarChart3", tone: "cyan", skills: ["Python", "SQL", "Microsoft Excel"] },
+  { id: "frontend", title: "Frontend", description: "Interfaces that feel effortless.", icon: "Layout", tone: "orange", skills: ["HTML", "CSS", "React", "Tailwind CSS"] },
+  { id: "backend", title: "Backend", description: "APIs and services that scale.", icon: "Server", tone: "cyan", skills: ["Node.js", "Express.js"] },
+  { id: "database", title: "Database", description: "Where the data lives.", icon: "Database", tone: "orange", skills: ["MongoDB"] },
+  { id: "tools", title: "Tools", description: "My daily driver stack.", icon: "Wrench", tone: "cyan", skills: ["Git", "GitHub", "VS Code"] },
 ];
 
 export const projects: Project[] = [
@@ -146,118 +131,288 @@ export const projects: Project[] = [
     title: "NGO AI Insights",
     category: "Data Analytics",
     description:
-      "An AI-powered platform that helps organize and analyze NGO information for research and social impact.",
+      "An AI-powered platform for organizing, analyzing, and visualizing NGO information to support research and social impact initiatives.",
+
     overview:
-      "NGO AI Insights is a research tool that turns scattered NGO information into a structured, searchable knowledge base with AI-assisted summaries — designed for students, researchers, and social impact teams.",
+      "NGO AI Insights is a modern data analytics platform built to simplify NGO research. It organizes scattered NGO information into a searchable knowledge base and provides AI-assisted insights for researchers, students, and nonprofit organizations.",
+
     problem:
-      "NGO information is often scattered across different sources, making research difficult.",
+      "NGO information is spread across multiple websites, making research slow and inefficient.",
+
     solution:
-      "Developed a platform that organizes NGO data into structured insights using modern web technologies and AI-assisted workflows.",
-    technologies: ["React", "TypeScript", "AI", "Data Analytics"],
+      "Developed an AI-powered research platform that centralizes NGO data, enables intelligent searching, and generates structured insights.",
+
+  technologies: [
+  "HTML",
+  "CSS",
+  "AI",
+  "Data Analytics",
+],
+
     features: [
-      "Organized NGO database",
-      "AI-assisted insights",
-      "Search and filtering",
-      "Responsive interface",
+      "AI-assisted NGO summaries",
+      "Advanced search & filtering",
+      "Responsive dashboard",
+      "Modern analytics UI",
+      "Structured NGO database",
     ],
+
     learnings: [
-      "Structuring unorganized real-world data",
-      "Designing analyst-friendly UIs",
-      "Working with AI-assisted research workflows",
+      "AI-assisted research workflows",
+      "Large-scale data organization",
+      "React application architecture",
+      "UI/UX for analytical platforms",
     ],
+
     challenges: [
-      "Normalizing inconsistent NGO data from multiple sources",
-      "Balancing information density with a clean, scannable UI",
-      "Prompt-designing AI summaries that stay factual",
+      "Cleaning inconsistent NGO datasets",
+      "Maintaining fast search performance",
+      "Designing a dashboard for large datasets",
     ],
+
     futureImprovements: [
-      "Full-text search with filters by cause and region",
-      "Verified data pipeline backed by Lovable Cloud",
-      "Public-facing analytics dashboard for social impact metrics",
+      "Real-time NGO database updates",
+      "Advanced analytics dashboard",
+      "User authentication",
+      "Cloud database integration",
     ],
-    githubUrl: "https://github.com",
-    liveUrl: "#",
+
+    architecture: {
+      title: "AI Research Pipeline",
+      description:
+        "Collect NGO information, normalize datasets, process using AI-assisted workflows, and present through a modern React dashboard.",
+      nodes: [
+        "NGO Sources",
+        "Data Cleaning",
+        "Structured Database",
+        "AI Processing",
+        "React Dashboard",
+      ],
+    },
+
+    timeline: "2025",
+
+    screenshots: [
+      {
+        src: "https://picsum.photos/seed/ngo-ai-1/1600/900",
+        alt: "NGO AI Insights Dashboard",
+      },
+      {
+        src: "https://picsum.photos/seed/ngo-ai-2/1600/900",
+        alt: "NGO Search",
+      },
+      {
+        src: "https://picsum.photos/seed/ngo-ai-3/1600/900",
+        alt: "AI Summary",
+      },
+    ],
+
+    relatedSlugs: [
+      "ai-in-education",
+      "ngo-research-webpage",
+    ],
+
+    githubUrl:
+      "https://github.com/JayPatel0908/AI-INSIGHT-FOR-NGO-GROWTH",
+
+    liveUrl:
+      "https://ngo-ai-insights.oneapp.dev/",
+
     tone: "orange",
     featured: true,
     year: "2025",
   },
+
   {
     id: "ai-education",
     slug: "ai-in-education",
+
     title: "AI in Education for Social Impact",
-    category: "AI",
+
+    category: "Artificial Intelligence",
+
     description:
-      "A platform demonstrating how Artificial Intelligence can improve education accessibility and social impact.",
+      "A modern educational platform demonstrating how Artificial Intelligence can improve learning accessibility and social impact.",
+
     overview:
-      "A concept platform that showcases how AI can make learning more accessible — from adaptive study aids to inclusive content — with a strong social-impact lens.",
+      "This project showcases practical AI applications in education through interactive content, responsive design, and real-world examples that promote accessible learning.",
+
     problem:
-      "Students and educators often lack awareness of practical AI applications in education.",
+      "Many students and educators are unaware of how AI can improve education.",
+
     solution:
-      "Created a platform showcasing AI-driven educational solutions and their potential impact.",
-    technologies: ["React", "AI", "Education", "Analytics"],
+      "Designed a responsive educational website highlighting AI applications, benefits, and future possibilities.",
+
+  technologies: [
+  "HTML",
+  "CSS",
+  "AI",
+  "Data Analytics",
+],
+
     features: [
-      "Educational content",
-      "AI use cases",
-      "Interactive UI",
-      "Modern responsive design",
+      "Interactive educational sections",
+      "Responsive interface",
+      "Modern UI",
+      "AI use-case demonstrations",
     ],
+
     learnings: [
-      "Translating AI concepts into approachable content",
-      "Storytelling around social impact",
-      "Building accessible, responsive interfaces",
+      "Educational UI design",
+      "Content presentation",
+      "Responsive layouts",
+      "AI storytelling",
     ],
+
     challenges: [
-      "Explaining AI without oversimplifying or overselling it",
-      "Designing content for a wide range of readers",
-      "Keeping the UI approachable while still feeling modern",
+      "Presenting AI concepts simply",
+      "Balancing visuals with educational content",
     ],
+
     futureImprovements: [
-      "Interactive AI demos embedded in the page",
-      "Multilingual content for wider accessibility",
-      "Case studies backed by real classroom data",
+      "Interactive AI demonstrations",
+      "Multilingual support",
+      "Real classroom case studies",
     ],
-    githubUrl: "https://github.com",
-    liveUrl: "#",
+
+    architecture: {
+      title: "Education Platform",
+      description:
+        "Educational content combined with AI modules delivered through a responsive React application.",
+      nodes: [
+        "Educational Content",
+        "AI Modules",
+        "React UI",
+        "Users",
+      ],
+    },
+
+    timeline: "2025",
+
+    screenshots: [
+      {
+        src: "https://picsum.photos/seed/ai-edu-1/1600/900",
+        alt: "Hero",
+      },
+      {
+        src: "https://picsum.photos/seed/ai-edu-2/1600/900",
+        alt: "Content",
+      },
+      {
+        src: "https://picsum.photos/seed/ai-edu-3/1600/900",
+        alt: "Impact",
+      },
+    ],
+
+    relatedSlugs: [
+      "ngo-ai-insights",
+      "ngo-research-webpage",
+    ],
+
+    githubUrl:
+      "https://github.com/JayPatel0908/AI-IN-EDUCATION",
+
+    liveUrl:
+      "https://ai-edu-social-impact.oneapp.dev/",
+
     tone: "cyan",
     featured: true,
     year: "2025",
   },
+
   {
-    id: "volunteer-india-2025",
-    slug: "volunteer-india-2025",
-    title: "Volunteer India 2025",
-    category: "Web Development",
+    id: "ngo-research-webpage",
+
+    slug: "ngo-research-webpage",
+
+    title: "NGO Research Webpage",
+
+    category: "Research Platform",
+
     description:
-      "A volunteer opportunity platform helping students discover internships, fellowships and volunteer programs across India.",
+      "A responsive website presenting NGO research, analytics, and social impact information in an easy-to-understand format.",
+
     overview:
-      "Volunteer India 2025 centralizes verified volunteer, fellowship, and internship opportunities into a single, easy-to-browse platform for students looking to create real-world impact.",
+      "Developed during an AI & Data Analytics Internship to present structured NGO research, educational resources, and analytics through a modern web experience.",
+
     problem:
-      "Students struggle to find verified volunteer opportunities in one place.",
-    solution: "Built a centralized platform to explore social impact opportunities.",
-    technologies: ["React", "TypeScript", "JavaScript"],
+      "Reliable NGO research is scattered and difficult to browse.",
+
+    solution:
+      "Created a centralized responsive website showcasing NGO information and research findings.",
+
+    technologies: [
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "TypeScript",
+  "AI",
+  "Data Analytics",
+],
     features: [
-      "Opportunity listings",
-      "Modern UI",
       "Responsive design",
-      "Easy navigation",
+      "Research presentation",
+      "Clean information layout",
+      "Social impact content",
     ],
+
     learnings: [
-      "Content-first information architecture",
-      "Component-driven React patterns",
-      "Delivering polished UX on a tight scope",
+      "Responsive web development",
+      "Information architecture",
+      "Content organization",
     ],
+
     challenges: [
-      "Curating credible opportunities from many sources",
-      "Designing a browsing experience that scales to hundreds of listings",
-      "Keeping listings fresh with minimal manual effort",
+      "Presenting large research content clearly",
+      "Maintaining readability",
     ],
+
     futureImprovements: [
-      "User accounts to bookmark opportunities",
-      "Admin panel powered by Lovable Cloud",
-      "Email alerts for new matching opportunities",
+      "Search functionality",
+      "Database integration",
+      "Admin dashboard",
     ],
-    githubUrl: "https://github.com",
-    liveUrl: "#",
+
+    architecture: {
+      title: "Research Website",
+      description:
+        "Static research content delivered through a responsive frontend architecture.",
+      nodes: [
+        "Research",
+        "Content",
+        "Frontend",
+        "Users",
+      ],
+    },
+
+    timeline: "2025",
+
+    screenshots: [
+      {
+        src: "https://picsum.photos/seed/research-1/1600/900",
+        alt: "Home",
+      },
+      {
+        src: "https://picsum.photos/seed/research-2/1600/900",
+        alt: "Research",
+      },
+      {
+        src: "https://picsum.photos/seed/research-3/1600/900",
+        alt: "Content",
+      },
+    ],
+
+    relatedSlugs: [
+      "ngo-ai-insights",
+      "ai-in-education",
+    ],
+
+    githubUrl:
+      "https://github.com/JayPatel0908/ngo-research-webpage",
+
+    liveUrl:
+      "https://ngoresearch-hnxdcgfn.manus.space/",
+
     tone: "orange",
     featured: true,
     year: "2025",
@@ -266,27 +421,39 @@ export const projects: Project[] = [
 
 export const experiences: Experience[] = [
   {
-    id: "inamigos-2025",
-    role: "AI & Data Analytics Intern",
+    id: "inamigos",
+    role: "AI & Data Analytics Intern (Project-Based)",
     organization: "InAmigos Foundation",
+    organizationUrl: "https://inamigosfoundation.org",
     type: "Remote Internship",
-    period: "2025",
+    period: "Jul 2026",
     location: "Remote",
+
     responsibilities: [
-      "NGO research and data collection",
-      "AI-assisted data analysis",
-      "Social impact reporting",
-      "Documentation",
-      "Team collaboration",
-      "Research presentation",
+      "NGO Research",
+      "AI-assisted Analysis",
+      "Data Collection",
+      "Report Preparation",
+      "Website Development using AI",
     ],
+
+    technologies: [
+      "Python",
+      "Excel",
+      "AI Tools",
+      "Google Workspace",
+      "ChatGPT",
+      "Gemini",
+    ],
+
     skills: [
       "Data Analysis",
       "Research",
-      "AI Tools",
       "Communication",
       "Problem Solving",
+      "Documentation",
     ],
+
     tone: "cyan",
   },
 ];
@@ -299,129 +466,357 @@ export const education: Education[] = [
     institution:
       "Yadavrao Tasgaonkar Institute of Technology and Engineering",
     university: "Mumbai University",
-    period: "2023 — 2027",
-    status: "Expected 2027",
-    description:
-      "Focused on data structures, databases, AI fundamentals, and software engineering — with self-directed depth in data analytics.",
+    period: "2023 – 2027",
+    status: "Expected Graduation • 2027",
+
+    coursework: [
+      "Data Structures",
+      "Database Management Systems",
+      "Operating Systems",
+      "Computer Networks",
+      "Artificial Intelligence",
+      "Software Engineering",
+    ],
+
+    activities: [
+      "AI Projects",
+      "Data Analytics Projects",
+      "Open Source Learning",
+    ],
+
     tone: "orange",
   },
 ];
 
 export const certifications: Certification[] = [
   {
-    id: "cert-placeholder-1",
-    name: "Data Analytics Foundations",
-    organization: "Coming Soon",
-    issueDate: "TBA",
+    id: "tcs-ion-career-edge",
+    name: "TCS iON Career Edge – Young Professional",
+    organization: "TCS iON",
+    issueDate: "Aug 2025",
+    expiryDate: "",
+    credentialId: "",
     credentialUrl: "#",
+    verificationUrl: "#",
+    skills: [
+      "Communication",
+      "Business Etiquette",
+      "Presentation",
+      "Career Readiness",
+    ],
     tone: "orange",
   },
   {
-    id: "cert-placeholder-2",
-    name: "AI & Machine Learning Essentials",
-    organization: "Coming Soon",
-    issueDate: "TBA",
+    id: "deloitte-data-analytics",
+    name: "Data Analytics Job Simulation",
+    organization: "Deloitte",
+    issueDate: "Jul 2025",
+    expiryDate: "",
+    credentialId: "",
     credentialUrl: "#",
+    verificationUrl: "#",
+    skills: [
+      "Data Analytics",
+      "Excel",
+      "Data Visualization",
+      "Business Analysis",
+    ],
     tone: "cyan",
   },
   {
-    id: "cert-placeholder-3",
-    name: "SQL for Data Analysis",
-    organization: "Coming Soon",
-    issueDate: "TBA",
+    id: "simplilearn-data-analytics",
+    name: "Introduction to Data Analytics",
+    organization: "Simplilearn",
+    issueDate: "Jul 2025",
+    expiryDate: "",
+    credentialId: "",
     credentialUrl: "#",
+    verificationUrl: "#",
+    skills: [
+      "Analytics",
+      "Data Cleaning",
+      "Excel",
+      "Statistics",
+    ],
+    tone: "orange",
+  },
+  {
+    id: "cisco-cybersecurity",
+    name: "Introduction to Cybersecurity",
+    organization: "Cisco",
+    issueDate: "Jul 2025",
+    expiryDate: "",
+    credentialId: "",
+    credentialUrl: "#",
+    verificationUrl: "#",
+    skills: [
+      "Cybersecurity",
+      "Networking",
+      "Security Fundamentals",
+    ],
+    tone: "cyan",
+  },
+  {
+    id: "google-analytics",
+    name: "Google Analytics Certification",
+    organization: "Google",
+    issueDate: "2025",
+    expiryDate: "",
+    credentialId: "",
+    credentialUrl: "#",
+    verificationUrl: "#",
+    skills: [
+      "Google Analytics",
+      "Website Analytics",
+      "Reporting",
+    ],
     tone: "orange",
   },
 ];
 
-export const contactChannels: ContactChannel[] = [
-  {
-    id: "email",
-    label: "Email",
-    value: "jaykumar.patel@example.com",
-    href: "mailto:jaykumar.patel@example.com",
-    icon: "Mail",
-    tone: "orange",
-  },
-  {
-    id: "linkedin",
-    label: "LinkedIn",
-    value: "linkedin.com/in/jaykumar-patel",
-    href: "https://linkedin.com/in/jaykumar-patel",
-    icon: "Linkedin",
-    tone: "cyan",
-  },
-  {
-    id: "github",
-    label: "GitHub",
-    value: "github.com/jaykumar-patel",
-    href: "https://github.com/jaykumar-patel",
-    icon: "Github",
-    tone: "orange",
-  },
-  {
-    id: "location",
-    label: "Location",
-    value: "India",
-    href: "#",
-    icon: "MapPin",
-    tone: "cyan",
-  },
-];
 
 export const currentlyLearning: LearningTopic[] = [
   {
     id: "python",
     name: "Python",
-    description: "Data wrangling with pandas, numpy and scripting.",
+    description: "Advanced Python for Data Analytics and automation.",
     icon: "Code2",
-    progress: 70,
+    progress: 80,
     level: "Building",
     tone: "orange",
   },
   {
     id: "sql",
     name: "SQL",
-    description: "Complex joins, window functions, and query tuning.",
+    description: "Advanced joins, window functions and query optimization.",
     icon: "Database",
-    progress: 65,
+    progress: 80,
     level: "Building",
     tone: "cyan",
   },
   {
-    id: "ml",
-    name: "Machine Learning",
-    description: "Supervised learning, model evaluation and pitfalls.",
-    icon: "Brain",
-    progress: 45,
-    level: "Exploring",
-    tone: "orange",
-  },
-  {
-    id: "data-analytics",
-    name: "Data Analytics",
-    description: "Statistical thinking, dashboards, and storytelling.",
+    id: "powerbi",
+    name: "Power BI",
+    description: "Interactive dashboards and business intelligence.",
     icon: "BarChart3",
+    progress: 65,
+    level: "Learning",
+    tone: "orange",
+  },
+  {
+    id: "tableau",
+    name: "Tableau",
+    description: "Data visualization and storytelling.",
+    icon: "PieChart",
     progress: 60,
+    level: "Learning",
+    tone: "cyan",
+  },
+  {
+    id: "machine-learning",
+    name: "Machine Learning",
+    description: "Regression, classification and model evaluation.",
+    icon: "Brain",
+    progress: 50,
+    level: "Learning",
+    tone: "orange",
+  },
+  {
+    id: "pandas",
+    name: "Pandas",
+    description: "Data cleaning, transformation and analysis.",
+    icon: "Table",
+    progress: 75,
     level: "Building",
     tone: "cyan",
   },
   {
-    id: "ai",
-    name: "Artificial Intelligence",
-    description: "Prompt design, LLM tooling, and AI-assisted workflows.",
-    icon: "Sparkles",
-    progress: 55,
-    level: "Exploring",
+    id: "numpy",
+    name: "NumPy",
+    description: "Numerical computing with Python.",
+    icon: "Calculator",
+    progress: 65,
+    level: "Learning",
     tone: "orange",
   },
   {
-    id: "react",
-    name: "React",
-    description: "Advanced patterns, TanStack Router, and performance.",
-    icon: "Atom",
-    progress: 75,
-    level: "Refining",
+    id: "excel-advanced",
+    name: "Advanced Excel",
+    description: "Pivot Tables, Power Query and dashboard creation.",
+    icon: "FileSpreadsheet",
+    progress: 80,
+    level: "Building",
     tone: "cyan",
+  },
+  {
+    id: "data-visualization",
+    name: "Data Visualization",
+    description: "Creating insightful dashboards and reports.",
+    icon: "LineChart",
+    progress: 70,
+    level: "Building",
+    tone: "orange",
   },
 ];
+
+/* ─────────────────────────  New in Batch 5  ───────────────────────── */
+
+export const achievements: Achievement[] = [
+  {
+    id: "inamigos-internship",
+    title: "AI & Data Analytics Internship",
+    description:
+      "Completed a project-based internship focused on NGO research, AI-assisted data analysis, report preparation, and website development.",
+    category: "Internship",
+    date: "Jul 2026",
+    organization: "InAmigos Foundation",
+    tone: "cyan",
+  },
+
+  {
+    id: "portfolio-projects",
+    title: "Developed 4 Portfolio Projects",
+    description:
+      "Built NGO AI Insights, AI in Education for Social Impact, NGO Research Webpage, and IMPACT INDIA.",
+    category: "Projects",
+    date: "Jul 2026",
+    tone: "orange",
+  },
+
+  {
+    id: "certifications",
+    title: "Professional Certifications",
+    description:
+      "Completed certifications in Data Analytics, Cybersecurity, Google Analytics, and TCS iON Career Edge.",
+    category: "Certification",
+    date: "Jul 2025",
+    tone: "orange",
+  },
+];
+
+export const resumeMeta: ResumeMeta = {
+  version: "v2.0",
+  lastUpdated: "July 2026",
+  fileUrl: "/Jay_Patel_Resume_Styled.pdf",
+  sizeKb: 250,
+  highlights: [
+    "B.E. Information Technology — Mumbai University (2023–2027)",
+    "AI & Data Analytics Internship at InAmigos Foundation",
+    "3 portfolio projects in Data Analytics, AI, and Web",
+    "Working stack: Python, SQL, React, TypeScript",
+  ],
+};
+
+export const githubProfile: GitHubProfile = {
+  username: "JayPatel0908",
+  url: "https://github.com/JayPatel0908",
+
+  // Placeholder values until GitHub API integration
+  followers: 0,
+  following: 0,
+  totalStars: 0,
+  publicRepos: 10,
+  contributionsLastYear: 0,
+
+  topLanguages: [
+    {
+      name: "TypeScript",
+      percent: 35,
+      color: "#3178C6",
+    },
+    {
+      name: "JavaScript",
+      percent: 25,
+      color: "#F7DF1E",
+    },
+    {
+      name: "Python",
+      percent: 20,
+      color: "#3776AB",
+    },
+    {
+      name: "Java",
+      percent: 12,
+      color: "#EA2D2E",
+    },
+    {
+      name: "HTML/CSS",
+      percent: 8,
+      color: "#E34F26",
+    },
+  ],
+
+  repos: [
+    {
+      id: "ai-insight-for-ngo-growth",
+      name: "AI-INSIGHT-FOR-NGO-GROWTH",
+      description:
+        "AI-powered platform for NGO research, analytics and social impact insights.",
+      url: "https://github.com/JayPatel0908/AI-INSIGHT-FOR-NGO-GROWTH",
+      language: "TypeScript",
+      stars: 0,
+      forks: 0,
+      featured: true,
+      topics: [
+        "react",
+        "typescript",
+        "ai",
+        "analytics",
+        "ngo",
+      ],
+    },
+
+    {
+      id: "ai-in-education",
+      name: "AI-IN-EDUCATION",
+      description:
+        "Educational platform showcasing AI applications for social impact and learning.",
+      url: "https://github.com/JayPatel0908/AI-IN-EDUCATION",
+      language: "HTML",
+      stars: 0,
+      forks: 0,
+      topics: [
+        "education",
+        "ai",
+        "html",
+        "css",
+        "javascript",
+      ],
+    },
+
+    {
+      id: "ngo-research-webpage",
+      name: "ngo-research-webpage",
+      description:
+        "Research portal for NGOs with modern responsive UI and organized information.",
+      url: "https://github.com/JayPatel0908/ngo-research-webpage",
+      language: "HTML",
+      stars: 0,
+      forks: 0,
+      topics: [
+        "ngo",
+        "research",
+        "html",
+        "css",
+      ],
+    },
+
+    {
+      id: "impact-india",
+      name: "IMPACT-INDIA",
+      description:
+        "Platform highlighting NGOs, volunteering opportunities and social initiatives across India.",
+      url: "https://github.com/JayPatel0908/IMPACT-INDIA",
+      language: "TypeScript",
+      stars: 0,
+      forks: 0,
+      topics: [
+        "react",
+        "typescript",
+        "social-impact",
+      ],
+    },
+  ],
+
+  featuredRepoId: "ai-insight-for-ngo-growth",
+};

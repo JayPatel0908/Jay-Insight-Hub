@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/action-button";
 import { profile } from "@/content";
 
 const SOCIAL = [
-  { label: "GitHub", href: "https://github.com/jaykumar-patel", Icon: Github },
-  { label: "LinkedIn", href: "https://linkedin.com/in/jaykumar-patel", Icon: Linkedin },
+  { label: "GitHub", href: "https://github.com/JayPatel0908", Icon: Github },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/jaykumar-patel-03982b379/", Icon: Linkedin },
   { label: "Twitter", href: "https://twitter.com", Icon: Twitter },
-  { label: "Email", href: "mailto:jaykumar.patel@example.com", Icon: Mail },
+  { label: "Email", href: "jaykumar08patel@gmail.com", Icon: Mail },
 ];
 
 const LINKS = [

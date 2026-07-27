@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import {
@@ -14,11 +15,16 @@ import {
   GraduationCap,
   LineChart,
   Calendar,
+  Network,
+  ChevronRight,
+  Expand,
 } from "lucide-react";
+
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/action-button";
+import { Lightbox } from "@/components/ui/lightbox";
 import { projects } from "@/content";
 import type { Project } from "@/content/types";
 import { cn } from "@/lib/utils";
@@ -29,7 +35,7 @@ export const Route = createFileRoute("/projects/$slug")({
     if (!project) throw notFound();
     return { project };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     if (!loaderData) {
       return {
         meta: [
@@ -41,6 +47,32 @@ export const Route = createFileRoute("/projects/$slug")({
     const { project } = loaderData;
     const title = `${project.title} — Case Study | Jaykumar Patel`;
     const description = project.overview ?? project.description;
+    const url = `https://insight-aura-space.lovable.app/projects/${params.slug}`;
+    const image = project.cover;
+
+    const creativeWork = {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      name: project.title,
+      headline: project.title,
+      description,
+      url,
+      ...(image ? { image } : {}),
+      ...(project.year ? { datePublished: project.year } : {}),
+      author: { "@type": "Person", name: "Jaykumar Patel" },
+      keywords: project.technologies.join(", "),
+      genre: project.category,
+    };
+    const breadcrumb = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://insight-aura-space.lovable.app/" },
+        { "@type": "ListItem", position: 2, name: "Projects", item: "https://insight-aura-space.lovable.app/#projects" },
+        { "@type": "ListItem", position: 3, name: project.title, item: url },
+      ],
+    };
+
     return {
       meta: [
         { title },
@@ -48,12 +80,25 @@ export const Route = createFileRoute("/projects/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:type", content: "article" },
+        { property: "og:url", content: url },
+        ...(image
+          ? [
+              { property: "og:image", content: image },
+              { name: "twitter:image", content: image },
+            ]
+          : []),
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: description },
       ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        { type: "application/ld+json", children: JSON.stringify(creativeWork) },
+        { type: "application/ld+json", children: JSON.stringify(breadcrumb) },
+      ],
     };
   },
+
   component: ProjectDetail,
   errorComponent: ({ error }) => (
     <Section>
@@ -235,29 +280,55 @@ function ProjectDetail() {
 
             {project.screenshots && project.screenshots.length > 0 && (
               <GlassCard>
-                <h2 className="font-display text-lg font-semibold">
-                  Screenshots
-                </h2>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                  {project.screenshots.map((s) => (
-                    <div
-                      key={s.src}
-                      className="relative aspect-video overflow-hidden rounded-2xl border border-border"
-                    >
-                      <img
-                        src={s.src}
-                        alt={s.alt}
-                        loading="lazy"
-                        decoding="async"
-                        className="absolute inset-0 h-full w-full object-cover"
-                      />
-                    </div>
-                  ))}
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="font-display text-lg font-semibold">
+                    Screenshots
+                  </h2>
+                  <span className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                    Click to expand
+                  </span>
                 </div>
+                <ScreenshotGallery
+                  images={project.screenshots}
+                  title={project.title}
+                />
+              </GlassCard>
+            )}
+
+            {project.architecture && (
+              <GlassCard tone={tone}>
+                <div className="flex items-center gap-2">
+                  <Network className="h-4 w-4 text-muted-foreground" aria-hidden />
+                  <h2 className="font-display text-lg font-semibold">
+                    {project.architecture.title ?? "Architecture"}
+                  </h2>
+                </div>
+                {project.architecture.description && (
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    {project.architecture.description}
+                  </p>
+                )}
+                {project.architecture.diagramUrl ? (
+                  <div className="mt-4 overflow-hidden rounded-2xl border border-border">
+                    <img
+                      src={project.architecture.diagramUrl}
+                      alt={`${project.title} architecture diagram`}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-auto w-full"
+                    />
+                  </div>
+                ) : (
+                  <ArchitectureDiagramPlaceholder
+                    nodes={project.architecture.nodes ?? []}
+                    tone={tone}
+                  />
+                )}
               </GlassCard>
             )}
 
             {project.challenges && project.challenges.length > 0 && (
+
               <GlassCard tone="orange">
                 <div className="flex items-center gap-2">
                   <Wrench
@@ -413,9 +484,230 @@ function ProjectDetail() {
           </aside>
         </div>
       </Section>
+
+      <RelatedProjects current={project} />
     </article>
   );
 }
+
+function RelatedProjects({ current }: { current: Project }) {
+  const slugs = current.relatedSlugs ?? [];
+  const related = (
+    slugs.length
+      ? slugs
+          .map((s) => projects.find((p) => p.slug === s))
+          .filter((p): p is Project => Boolean(p))
+      : projects.filter((p) => p.slug !== current.slug).slice(0, 2)
+  ).slice(0, 3);
+
+  if (related.length === 0) return null;
+
+  return (
+    <Section
+      size="xl"
+      eyebrow="Keep exploring"
+      title="Related case studies"
+      description="Other projects that share tools, themes, or intent."
+    >
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {related.map((p) => {
+          const tone = p.tone ?? "orange";
+          const isCyan = tone === "cyan";
+          const preview = p.screenshots?.[0]?.src ?? p.cover;
+          return (
+            <Link
+              key={p.id}
+              to="/projects/$slug"
+              params={{ slug: p.slug }}
+              preload="intent"
+              aria-label={`${p.title} — ${p.category} case study`}
+              className="group block focus:outline-none focus-visible:ring-focus"
+            >
+              <GlassCard tone={tone} interactive className="flex h-full flex-col gap-4 p-0">
+                <div
+                  className="relative aspect-[16/9] overflow-hidden rounded-t-3xl border-b border-border"
+                  style={{
+                    background: isCyan
+                      ? "radial-gradient(60% 60% at 30% 30%, var(--brand-cyan-soft), transparent 70%), var(--surface-1)"
+                      : "radial-gradient(60% 60% at 30% 30%, var(--brand-orange-soft), transparent 70%), var(--surface-1)",
+                  }}
+                >
+                  {preview ? (
+                    <img
+                      src={preview}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 grid place-items-center">
+                      <LineChart
+                        className={cn(
+                          "h-8 w-8",
+                          isCyan ? "text-brand-cyan" : "text-brand-orange",
+                        )}
+                        aria-hidden
+                      />
+                    </div>
+                  )}
+                  <span
+                    className={cn(
+                      "absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.14em] backdrop-blur",
+                      isCyan
+                        ? "border-brand-cyan/30 bg-brand-cyan-soft/80 text-brand-cyan"
+                        : "border-brand-orange/30 bg-brand-orange-soft/80 text-brand-orange",
+                    )}
+                  >
+                    <Sparkles className="h-3 w-3" aria-hidden />
+                    {p.category}
+                  </span>
+                </div>
+                <div className="flex flex-1 flex-col gap-3 px-6 pb-6">
+                  <h3 className="font-display text-lg font-semibold leading-tight">
+                    {p.title}
+                  </h3>
+                  <p className="line-clamp-2 text-sm text-muted-foreground">
+                    {p.description}
+                  </p>
+                  <ul className="flex flex-wrap gap-1.5">
+                    {p.technologies.slice(0, 4).map((t) => (
+                      <li
+                        key={t}
+                        className="rounded-full border border-border bg-surface-2/70 px-2.5 py-0.5 text-[11px] font-medium text-foreground/90"
+                      >
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                  <span
+                    className={cn(
+                      "mt-auto inline-flex items-center gap-1 text-sm font-medium",
+                      isCyan ? "text-brand-cyan" : "text-brand-orange",
+                    )}
+                  >
+                    Read case study
+                    <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+                  </span>
+                </div>
+              </GlassCard>
+            </Link>
+          );
+        })}
+      </div>
+    </Section>
+  );
+}
+
+function ScreenshotGallery({
+  images,
+  title,
+}: {
+  images: { src: string; alt: string }[];
+  title: string;
+}) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  return (
+    <>
+      <ul
+        className="mt-4 grid gap-4 sm:grid-cols-2"
+        aria-label={`${title} screenshots`}
+      >
+        {images.map((s, i) => (
+          <li key={s.src}>
+            <button
+              type="button"
+              onClick={() => setOpenIndex(i)}
+              aria-label={`Open screenshot: ${s.alt}`}
+              className="group relative block aspect-video w-full overflow-hidden rounded-2xl border border-border focus:outline-none focus-visible:ring-focus"
+            >
+              <img
+                src={s.src}
+                alt={s.alt}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+              <span
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              />
+              <span
+                aria-hidden
+                className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-border bg-surface-1/80 text-foreground/90 opacity-0 backdrop-blur transition-opacity duration-300 group-hover:opacity-100"
+              >
+                <Expand className="h-4 w-4" />
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <Lightbox
+        images={images}
+        openIndex={openIndex}
+        onClose={() => setOpenIndex(null)}
+        onIndexChange={setOpenIndex}
+      />
+    </>
+  );
+}
+
+function ArchitectureDiagramPlaceholder({
+  nodes,
+  tone,
+}: {
+  nodes: string[];
+  tone: "orange" | "cyan";
+}) {
+  const isCyan = tone === "cyan";
+  const list = nodes.length ? nodes : ["Input", "Process", "Output"];
+  return (
+    <div
+      className="mt-4 relative overflow-hidden rounded-2xl border border-border p-5"
+      style={{
+        background: isCyan
+          ? "radial-gradient(60% 60% at 20% 20%, var(--brand-cyan-soft), transparent 70%), var(--surface-1)"
+          : "radial-gradient(60% 60% at 20% 20%, var(--brand-orange-soft), transparent 70%), var(--surface-1)",
+      }}
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.12]"
+        style={{
+          backgroundImage:
+            "linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
+      <div className="relative flex flex-wrap items-center gap-2">
+        {list.map((n, i) => (
+          <div key={n} className="flex items-center gap-2">
+            <span
+              className={cn(
+                "inline-flex items-center rounded-xl border bg-surface-2/80 px-3 py-2 text-xs font-medium",
+                isCyan
+                  ? "border-brand-cyan/30 text-brand-cyan"
+                  : "border-brand-orange/30 text-brand-orange",
+              )}
+            >
+              {n}
+            </span>
+            {i < list.length - 1 && (
+              <ChevronRight
+                className="h-4 w-4 text-muted-foreground"
+                aria-hidden
+              />
+            )}
+          </div>
+        ))}
+      </div>
+      <p className="relative mt-3 text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+        Architecture diagram placeholder
+      </p>
+    </div>
+  );
+}
+
 
 function NarrativeCard({
   icon,
